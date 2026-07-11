@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glow & Glam | Product</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">Glow & Glam ✨</div>
+
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="cart.html">Cart</a></li>
+    </ul>
+</nav>
+
+<section id="product-details" class="product-details"></section>
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+async function loadProduct(){
+
+    try{
+
+        const response = await fetch(`http://localhost:5000/api/products/${id}`);
+        const product = await response.json();
+
+        document.getElementById("product-details").innerHTML = `
+
+        <div class="product-container">
+
+            <div class="product-image">
+
+                <img src="${product.image}" alt="${product.name}">
+
+            </div>
+
+            <div class="product-info">
+
+                <h1>${product.name}</h1>
+
+                <h2>₹${product.price}</h2>
+
+                <p>${product.description}</p>
+
+                <button onclick="addToCart()">
+                    Add To Cart
+                </button>
+
+                <button class="buy-btn">
+                    Buy Now
+                </button>
+
+            </div>
+
+        </div>
+
+        `;
+
+    }
+
+    catch(error){
+
+        console.log(error);
+
+    }
+
+}
+
+loadProduct();
+
+function addToCart(){
+
+    alert("Product Added Successfully!");
+
+}
+
+</script>
+
+</body>
+</html>
